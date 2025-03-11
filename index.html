@@ -1,0 +1,59 @@
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en"> -->
+
+<!-- <head> -->
+<!-- <meta charset="UTF-8"> -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!-- <title>Go WASM Example</title> -->
+<!-- <script src="wasm_exec.js"></script> -->
+<!-- </head> -->
+
+<!-- <body> -->
+<!-- <h1>Go WebAssembly Example</h1> -->
+<!-- <button id="wasmButton">Click me</button> -->
+<!-- <p id="wasmOutput"></p> -->
+
+<!-- <script> -->
+<!-- const go = new Go(); -->
+<!-- WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => { -->
+<!-- go.run(result.instance); -->
+<!-- }); -->
+<!-- </script> -->
+
+<!-- </body> -->
+
+<!-- </html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go WASM Fake Server</title>
+  <script src="wasm_exec.js"></script>
+</head>
+
+<body>
+  <h1>Go WebAssembly Fake Server</h1>
+  <button onclick="simulateRequest('response')">Send Request</button>
+  <p id="response"></p>
+
+  <script>
+    async function loadWASM() {
+      const go = new Go();
+      const result = await WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject);
+      go.run(result.instance);
+    }
+
+    function simulateRequest(elem) {
+      const response = wasmHandleRequest("/some-endpoint", "test");
+      document.getElementById(elem).innerHTML = response;
+    }
+
+    loadWASM();
+  </script>
+
+</body>
+
+</html>
